@@ -17,6 +17,6 @@ jobs:
     - name: Build
       run: docker-compose -f ./docker-compose.yml up -d --build
     - name: Migrate
-      run: docker-compose -f ./docker-compose.yml exec web python manage.py migrate
+      run: docker-compose -f ./docker-compose.yml exec -T web python manage.py migrate
     - name: Statics
-      run: docker-compose -f ./docker-compose.yml exec web python manage.py collectstatic
+      run: docker-compose -f ./docker-compose.yml exec -T web python manage.py collectstatic
