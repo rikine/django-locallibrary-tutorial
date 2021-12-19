@@ -14,7 +14,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Build the Docker image
-    - run: docker-compose -f docker-compose.yml up -d --build
-    - run: docker-compose -f docker-compose.yml exec web python manage.py migrate --noinput
-    - run: docker-compose -f docker-compose.yml exec web python manage.py collectstatic --noinput
+    - name: Build
+      run: docker-compose -f ./docker-compose.yml up -d --build
+    - name: Migrate
+      run: docker-compose -f ./docker-compose.yml exec web python manage.py migrate --noinput
+    - name: Statics
+      run: docker-compose -f ./docker-compose.yml exec web python manage.py collectstatic --noinput
