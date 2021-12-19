@@ -1,9 +1,8 @@
 # pull official base image
-FROM python:3.9.5-slim
+FROM python:3.9.6-alpine
 
-RUN apt-get update \
-    && apt-get -y install libpq-dev gcc \
-    && pip install psycopg2
+RUN apk update \
+    && apk add postgresql-dev gcc python3-dev musl-dev
 
 # set work directory
 WORKDIR /usr/src/app
@@ -14,6 +13,8 @@ ENV PYTHONUNBUFFERED 1
 
 # create directory for the app user
 RUN mkdir -p /home/app
+
+RUN addgroup -S app && adduser -S app -G app
 
 # install dependencies
 RUN pip install --upgrade pip
@@ -29,3 +30,7 @@ WORKDIR $APP_HOME
 
 # copy project
 COPY . $APP_HOME
+
+RUN chown -R app:app $APP_HOME
+
+USER app
